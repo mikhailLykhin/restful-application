@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet context="legacy" author="author" id="4">
+        <createTable tableName="author">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="publisher">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="genre">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="book">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="isbn" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="VARCHAR(200 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="publishing_year" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="picture" type="VARCHAR(100 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="genre_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="genre_id_FK" references="genre(id)"/>
+            </column>
+            <column name="publisher_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="publisher_id_FK" references="publisher(id)"/>
+            </column>
+            <column name="quantity" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_creation" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="book_author">
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             foreignKeyName="book_FK" references="book(id)" deleteCascade="true"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             foreignKeyName="author_FK" references="author(id)" deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="rating">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+                <column name="user_id" type="BIGINT">
+                    <constraints nullable="false" foreignKeyName="user_id_FK" references="user(id)"/>
+                </column>
+                <column name="book_id" type="BIGINT">
+                    <constraints nullable="false" foreignKeyName="book_id_FK" references="book(id)"/>
+                </column>
+            <column name="date" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rating_value" type="DECIMAL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="review" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="request">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="user_id_requestFK" references="user(id)"/>
+            </column>
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="book_id_requestFK" references="book(id)"/>
+            </column>
+            <column name="date_creation" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_extradition" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_return" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="VARCHAR(10 BYTE)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet context="legacy" author="author" id="5">
+        <insert tableName="user_detail">
+            <column  name="passport_number"  value="KH7777777"/>
+            <column  name="address"  value="Bogushevicha 16"/>
+            <column  name="educational_institution"  value="IT Academy"/>
+            <column  name="ei_address"  value="M.Gorkogo 1"/>
+        </insert>
+
+        <insert tableName="user">
+            <column  name="first_name"  value="Levi"/>
+            <column  name="last_name"  value="Strauss 16"/>
+            <column  name="email"  value="L3v1s@rambler.ru"/>
+            <column  name="user_detail_id"  value="1"/>
+            <column  name="password"  value="$2a$10$IDpP0FWrQBI0btt90udzW./.R/jBMt2QPk8oDj1yMI6D/1yRVIJpq"/>
+            <column  name="enabled"  value="1"/>
+        </insert>
+
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

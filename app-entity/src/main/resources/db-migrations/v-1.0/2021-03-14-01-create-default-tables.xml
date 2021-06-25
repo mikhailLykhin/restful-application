@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet context="legacy" author="author" id="1">
+        <createTable tableName="role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_detail">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="passport_number" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="telephone_number" type="VARCHAR(20 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="address" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="educational_institution" type="VARCHAR(100 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ei_address" type="VARCHAR(100 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_detail_id" type="SERIAL">
+                <constraints nullable="true" unique="true"
+                             foreignKeyName="user_detail_id_FK" references="user_detail(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="date_creation" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="enabled" type="INT">
+            <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="person">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <insert tableName="person">
+            <column name="name" value="Mike"/>
+            <column name="name" value="Nick"/>
+            <column name="name" value="Kate"/>
+            <column name="age" value="18"/>
+            <column name="age" value="19"/>
+            <column name="age" value="20"/>
+            <column name="email" value="Mike@lol.com"/>
+            <column name="email" value="Nick@lol.com"/>
+            <column name="email" value="Kate@lol.com"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
