@@ -6,6 +6,7 @@ import com.restful.app.api.services.CommonMapper;
 import com.restful.app.api.services.extension.jdbc_template.JdbcTemplatePersonService;
 import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,24 +22,31 @@ public class JdbcTemplatePersonServiceImpl implements JdbcTemplatePersonService 
     }
 
     @Override
+    @Transactional
     public void createPerson(PersonDto personDto) {
         jdbcTemplatePersonDao.createPerson(commonMapper.map(personDto, Person.class));
     }
 
     @Override
+    @Transactional
     public void updatePerson(long id, PersonDto personDto) {
         jdbcTemplatePersonDao.updatePerson(id, commonMapper.map(personDto, Person.class));
     }
 
+    @Override
+    @Transactional
     public List<PersonDto> getAllPersons() {
         return commonMapper.mapAll(jdbcTemplatePersonDao.getAllPersons(), PersonDto.class);
     }
 
+    @Override
+    @Transactional
     public PersonDto getPersonByEmail(String email) {
         return commonMapper.map(jdbcTemplatePersonDao.getPersonByEmail(email), PersonDto.class);
     }
 
     @Override
+    @Transactional
     public void deletePerson(long id) {
         jdbcTemplatePersonDao.deletePerson(id);
     }

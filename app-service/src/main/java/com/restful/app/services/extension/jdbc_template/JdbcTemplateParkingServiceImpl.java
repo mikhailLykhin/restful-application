@@ -7,6 +7,7 @@ import com.restful.app.api.services.extension.jdbc_template.JdbcTemplateParkingS
 import com.restful.app.extension_entity.Parking;
 import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,26 +24,31 @@ public class JdbcTemplateParkingServiceImpl implements JdbcTemplateParkingServic
 
 
     @Override
+    @Transactional
     public void createParking(ParkingDto parkingDto) {
         jdbcTemplateParkingDao.createParking(commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
+    @Transactional
     public void updateParking(long id, ParkingDto parkingDto) {
         jdbcTemplateParkingDao.updateParking(id, commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
+    @Transactional
     public List<ParkingDto>  getAllParking() {
         return commonMapper.mapAll(jdbcTemplateParkingDao.getAllParkings(), ParkingDto.class);
     }
 
     @Override
+    @Transactional
     public ParkingDto getParking(long id) {
         return commonMapper.map(jdbcTemplateParkingDao.getParking(id), ParkingDto.class);
     }
 
     @Override
+    @Transactional
     public void deleteParking(long id) {
         jdbcTemplateParkingDao.deleteParking(id);
     }

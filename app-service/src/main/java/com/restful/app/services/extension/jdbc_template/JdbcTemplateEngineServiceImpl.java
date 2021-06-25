@@ -8,6 +8,8 @@ import com.restful.app.api.services.extension.jdbc_template.JdbcTemplateEngineSe
 import com.restful.app.extension_entity.Engine;
 import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,26 +25,31 @@ public class JdbcTemplateEngineServiceImpl implements JdbcTemplateEngineService 
     }
 
     @Override
+    @Transactional
     public void createEngine(EngineDto personDto) {
         engineDao.createEngine(commonMapper.map(personDto, Engine.class));
     }
 
     @Override
+    @Transactional
     public void updateEngine(long id, EngineDto personDto) {
         engineDao.updateEngine(id, commonMapper.map(personDto, Engine.class));
     }
 
     @Override
+    @Transactional
     public List<EngineDto> getAllEngines() {
         return commonMapper.mapAll(engineDao.getAllEngines(), EngineDto.class);
     }
 
     @Override
+    @Transactional
     public EngineDto getEngine(long id) {
         return commonMapper.map(engineDao.getEngine(id), EngineDto.class);
     }
 
     @Override
+    @Transactional
     public void deleteEngine(long id) {
         engineDao.deleteEngine(id);
     }
