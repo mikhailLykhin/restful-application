@@ -22,19 +22,19 @@ public class GenreService implements IGenreService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public GenreDto getGenreById(long id) {
         return commonMapper.map(this.genreDao.getGenreById(id), GenreDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isGenreExist(String name) {
         return this.genreDao.isGenreExistByName(name);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void addGenre(GenreDto genreDto) {
         Genre genre = Genre.builder().name(genreDto.getName()).build();
         this.genreDao.create(genre);
@@ -42,13 +42,13 @@ public class GenreService implements IGenreService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<GenreDto> getAllGenresOrderByName() {
         return commonMapper.mapAll(this.genreDao.findAllGenresOrderByName(), GenreDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void deleteGenre(long id) {
         this.genreDao.delete(this.genreDao.getGenreById(id));
     }

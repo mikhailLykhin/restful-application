@@ -6,14 +6,13 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @SuperBuilder
 @Entity
 @Table(name = "engine")
@@ -29,8 +28,9 @@ public class Engine extends AEntity<Long> {
     @Column(name = "volume")
     private float volume;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
-            mappedBy = "engine",
-            fetch = FetchType.LAZY)
-    private List<Vehicle> vehicles;
+            mappedBy = "engine")
+    private Set<Vehicle> vehicles = new HashSet<>();
 }

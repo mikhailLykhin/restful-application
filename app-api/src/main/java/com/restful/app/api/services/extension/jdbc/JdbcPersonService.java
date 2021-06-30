@@ -1,21 +1,19 @@
 package com.restful.app.api.services.extension.jdbc;
 
 import com.restful.app.api.dto.extension.PersonDto;
-import com.restful.app.extension_entity.Person;
-import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
-@Service
 public interface JdbcPersonService {
 
-    void createPerson(PersonDto personDto);
+    void createPerson(PersonDto personDto) throws SQLException;
 
-    void updatePerson(long id, PersonDto personDto);
+    void updatePerson(long id, PersonDto personDto) throws SQLException;
 
-    List<PersonDto> getAllPersons();
+    List<PersonDto> getAllPersons() throws SQLException;
 
-    PersonDto getPersonByEmail(String email);
+    PersonDto getPersonByEmail(String email) throws SQLException;
 
-    void deletePerson(long id);
+    void deletePerson(long id) throws SQLException;
 }

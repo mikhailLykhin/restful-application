@@ -6,15 +6,12 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @SuperBuilder
 @Entity
 @Table(name = "vehicle")
@@ -31,15 +28,17 @@ public class Vehicle extends AEntity<Long> {
     private String model;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id", referencedColumnName = "id")
     private Engine engine;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "parking_vehicle",
             joinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "parking_id", referencedColumnName = "id"))
-    private List<Parking> parkings = new ArrayList<>();
+    private Set<Parking> parkings = new HashSet<>();
 
 
 }

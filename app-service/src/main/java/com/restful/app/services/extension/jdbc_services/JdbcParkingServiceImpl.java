@@ -5,10 +5,9 @@ import com.restful.app.api.dto.extension.ParkingDto;
 import com.restful.app.api.services.CommonMapper;
 import com.restful.app.api.services.extension.jdbc.JdbcParkingService;
 import com.restful.app.extension_entity.Parking;
-import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -23,32 +22,27 @@ public class JdbcParkingServiceImpl implements JdbcParkingService {
     }
 
     @Override
-    @Transactional
-    public void createParking(ParkingDto parkingDto) {
+    public void createParking(ParkingDto parkingDto) throws SQLException {
         parkingDao.createParking(commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
-    @Transactional
-    public void updateParking(long id, ParkingDto parkingDto) {
+    public void updateParking(long id, ParkingDto parkingDto) throws SQLException {
         parkingDao.updateParking(id, commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
-    @Transactional
-    public List<ParkingDto>  getAllParking() {
+    public List<ParkingDto>  getAllParking() throws SQLException {
         return commonMapper.mapAll(parkingDao.getAllParkings(), ParkingDto.class);
     }
 
     @Override
-    @Transactional
-    public ParkingDto getParking(long id) {
+    public ParkingDto getParking(long id) throws SQLException {
         return commonMapper.map(parkingDao.getParking(id), ParkingDto.class);
     }
 
     @Override
-    @Transactional
-    public void deleteParking(long id) {
+    public void deleteParking(long id) throws SQLException {
         parkingDao.deleteParking(id);
     }
 }

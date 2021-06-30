@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,8 +25,8 @@ public class VehicleDto {
     private VehicleType type;
     private String manufacture;
     private String model;
-    private Engine engine;
-    private List<ParkingDto> parkings;
+    private long engineId;
+    private Set<Long> parkingIds;
 
 
 }

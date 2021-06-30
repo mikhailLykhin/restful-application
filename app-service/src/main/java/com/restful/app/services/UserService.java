@@ -56,39 +56,39 @@ public class UserService implements IUserService, UserDetailsService {
 
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public UserDto getUserById(long id) {
         User user = this.userDao.get(id);
         return userMapper.toDto(user);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isUserExist(String email) {
         return this.userDao.isUserExist(email);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isUserExist(int id) {
         return this.userDao.isUserExist(id);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public UserDto getUserByEmail(String email) {
         User user = this.userDao.findUserByEmail(email);
         return userMapper.toDto(user);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<UserDto> getUsersBySearchRequest(String search) {
         return userMapper.mapListDto(this.userDao.findUsersBySearchRequest(search));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void deleteUser(long id) {
         User entity = this.userDao.get(id);
         this.userDao.delete(entity);
@@ -96,14 +96,14 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<UserDto> getAllUsers() {
         return userMapper.mapListDto(this.userDao.getAll());
 
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void createUser(UserDto user) {
         User entity = userMapper.toEntity(user);
         UserDetail userDetail = userDetailMapper.toEntity(user.getUserDetails());
@@ -119,7 +119,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void roleChangeUser(long id, UserDto user) {
         User entity = this.userDao.get(id);
         roleAddOrChange(entity, user.getRoleName());
@@ -149,7 +149,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void statusChangeUser(long id, int status) {
         User entity = this.userDao.get(id);
         entity.setStatus(status);
@@ -166,7 +166,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void updateUser(Principal principal, UserDtoMyAccount user) {
         User entity = this.userDao.findUserByEmail(principal.getName());
         entity.setEmail(user.getEmail());
@@ -180,14 +180,14 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isPasswordMatches(Principal principal, UserDtoPasswordChange userDtoPasswordChange) {
         User entity = this.userDao.findUserByEmail(principal.getName());
         return bCryptPasswordEncoder.matches(userDtoPasswordChange.getPasswordConfirm(), entity.getPassword());
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void updateUserPassword(Principal principal, UserDtoPasswordChange userDtoPasswordChange) {
         User entity = this.userDao.findUserByEmail(principal.getName());
         entity.setPassword(bCryptPasswordEncoder.encode(userDtoPasswordChange.getPassword()));
@@ -195,7 +195,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void changeForgotPassword(String email) {
         User entity = this.userDao.findUserByEmail(email);
         String generatedNewPassword = RandomStringUtils.randomAlphanumeric(10);
@@ -206,7 +206,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = this.userDao.findUserByEmail(email);
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -216,7 +216,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public User authentication(String email, String password) {
         User user = this.userDao.findUserByEmail(email);
         if (user != null) {

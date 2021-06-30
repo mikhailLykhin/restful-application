@@ -27,10 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,13 +51,19 @@ public class BookService implements IBookService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
+    public List<BookDto> findAllBooksTypedQuery() {
+        return commonMapper.mapAll(this.bookDao.findAllBooksTypedQuery(), BookDto.class);
+    }
+
+    @Override
+    @Transactional("transactionManager")
     public BookDto getBookById(long id) {
         return commonMapper.map(this.bookDao.get(id), BookDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public BookDto getBookByIsbn(String isbn) {
         BookDto bookDto = commonMapper.map(this.bookDao.findBookByIsbnWithAvgRating(isbn).get(0, Book.class),BookDto.class);
             bookDto.setAverageRating(this.bookDao.findBookByIsbnWithAvgRating(isbn).get(1, Double.class));
@@ -71,39 +74,39 @@ public class BookService implements IBookService {
                 .getRatings()
                 .stream()
                 .sorted(Comparator.comparing(RatingDto::getDateOfpost, Comparator.reverseOrder()))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toCollection(LinkedHashSet::new)));
         return bookDto;
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void deleteBook(long id) {
         this.bookDao.delete(this.bookDao.get(id));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public Page<BookDto> getAllBooksOrderByDateOfCreation(int pageNumber, int pageSize) {
         List<BookDto> allBooks = commonMapper.mapAll(this.bookDao.findAllBooksOrderByDateOfCreation(), BookDto.class);
         return PaginationUtil.getPageBookDto(allBooks, PageRequest.of(pageNumber - 1, pageSize));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public  Page<BookDto> getAllBooksWithAvgRating(int pageNumber, int pageSize) {
         List<BookDto> allBooks = parseTupleToListBookDto( this.bookDao.findAllBooksWithAvgRating());
         return PaginationUtil.getPageBookDto(allBooks, PageRequest.of(pageNumber - 1, pageSize));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public Page<BookDto> getAllBooksOrderByRequestWithAvgRating(String orderBy, String genre, int pageNumber, int pageSize) {
         List<BookDto> allBooks = parseTupleToListBookDto(this.bookDao.findAllBooksOrderByRequestWithAvgRating(orderBy, genre));
         return PaginationUtil.getPageBookDto(allBooks, PageRequest.of(pageNumber - 1, pageSize));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public Page<BookDto> getAllBooksBySearchAndOrderByRequestWithAvgRating(String search, String genre, String orderBy,
                                                                            int pageNumber, int pageSize) {
       List<BookDto> allBooks = parseTupleToListBookDto(this.bookDao.findAllBooksBySearchAndOrderByRequestWithAvgRating(search, genre, orderBy));
@@ -116,7 +119,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void addBook(BookDto bookDto) {
         final int DEFAULT_QUANTITY = 1;
         if (this.bookDao.isBookExistByIsbn(bookDto.getIsbn())) {

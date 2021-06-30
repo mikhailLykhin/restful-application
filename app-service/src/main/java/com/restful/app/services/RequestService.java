@@ -37,7 +37,7 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void createRequest(String isbn, String email) {
         Request request = new Request();
         Book book = this.bookDao.findBookByIsbn(isbn);
@@ -52,43 +52,43 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void deleteRequest(long id) {
         this.requestDao.delete(this.requestDao.get(id));
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<RequestDto> getAllCreatedRequestsFromUserByEmail(String email) {
         return commonMapper.mapAll(this.requestDao.findAllCreatedRequestsFromUserByEmail(email), RequestDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<RequestDto> getAllConfirmedRequestsFromUserByEmail(String email) {
         return commonMapper.mapAll(this.requestDao.findAllConfirmedRequestsFromUserByEmail(email), RequestDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<RequestDto> getAllRequests(String status) {
         return commonMapper.mapAll(this.requestDao.findAllRequests(status), RequestDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public List<RequestDto> getAllRequestsBySearch(String status, String search) {
         return commonMapper.mapAll(this.requestDao.findAllRequestsBySearch(status, search), RequestDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isRequestExistForCurrentBookFromUser(String isbn, String email) {
         return this.requestDao.isRequestExistForCurrentBookFromUser(isbn, email);
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void confirmRequests(String email) {
         for (Request request : this.requestDao.findAllCreatedRequestsFromUserByEmail(email)) {
             request.setStatus(RequestStatusName.CONFIRMED.getNameDB());
@@ -97,7 +97,7 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void processRequest(long id) {
         Request request = this.requestDao.get(id);
         request.setStatus(RequestStatusName.PROCESSED.getNameDB());
@@ -106,7 +106,7 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void returnRequest(long id) {
         Request request = this.requestDao.get(id);
         request.setStatus(RequestStatusName.RETURNED.getNameDB());

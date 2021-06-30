@@ -5,7 +5,6 @@ import com.restful.app.api.dto.extension.ParkingDto;
 import com.restful.app.api.services.CommonMapper;
 import com.restful.app.api.services.extension.jdbc_template.JdbcTemplateParkingService;
 import com.restful.app.extension_entity.Parking;
-import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +36,7 @@ public class JdbcTemplateParkingServiceImpl implements JdbcTemplateParkingServic
 
     @Override
     @Transactional
-    public List<ParkingDto>  getAllParking() {
+    public List<ParkingDto> getAllParking() {
         return commonMapper.mapAll(jdbcTemplateParkingDao.getAllParkings(), ParkingDto.class);
     }
 

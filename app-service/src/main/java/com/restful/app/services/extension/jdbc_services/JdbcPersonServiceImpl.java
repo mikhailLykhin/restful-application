@@ -6,8 +6,8 @@ import com.restful.app.api.services.CommonMapper;
 import com.restful.app.api.services.extension.jdbc.JdbcPersonService;
 import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -22,32 +22,27 @@ public class JdbcPersonServiceImpl implements JdbcPersonService {
     }
 
     @Override
-    @Transactional
-    public void createPerson(PersonDto personDto) {
+    public void createPerson(PersonDto personDto) throws SQLException {
         personDao.createPerson(commonMapper.map(personDto, Person.class));
     }
 
     @Override
-    @Transactional
-    public void updatePerson(long id, PersonDto personDto) {
+    public void updatePerson(long id, PersonDto personDto) throws SQLException {
         personDao.updatePerson(id, commonMapper.map(personDto, Person.class));
     }
 
-    @Transactional
     @Override
-    public List<PersonDto> getAllPersons() {
+    public List<PersonDto> getAllPersons() throws SQLException {
         return commonMapper.mapAll(personDao.getAllPersons(), PersonDto.class);
     }
 
     @Override
-    @Transactional
-    public PersonDto getPersonByEmail(String email) {
+    public PersonDto getPersonByEmail(String email) throws SQLException {
         return commonMapper.map(personDao.getPersonByEmail(email), PersonDto.class);
     }
 
     @Override
-    @Transactional
-    public void deletePerson(long id) {
+    public void deletePerson(long id) throws SQLException {
         personDao.deletePerson(id);
     }
 

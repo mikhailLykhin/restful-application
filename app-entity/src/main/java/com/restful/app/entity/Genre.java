@@ -7,12 +7,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @SuperBuilder
-@EqualsAndHashCode
 @Entity
 @Table(name = "genre")
 public class Genre extends AEntity<Long>{
@@ -20,9 +18,9 @@ public class Genre extends AEntity<Long>{
     @Column(name = "name")
     private String name;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},orphanRemoval = true,
-            mappedBy = "genre",
-            fetch = FetchType.LAZY)
+            mappedBy = "genre")
     private List<Book> books = new ArrayList<>();
 
 }

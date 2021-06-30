@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +21,6 @@ public class PersonDto {
     private String name;
     private int age;
     private String email;
-    private List<ParkingDto> parkings;
+    private Set<ParkingDto> parkings;
 
 }

@@ -1,5 +1,6 @@
 package com.restful.app.dao.extension.jdbc;
 
+import com.restful.app.api.dao.extension.jdbc_dao.JdbcParkingDao;
 import com.restful.app.api.dao.extension.jdbc_dao.JdbcPersonDao;
 import com.restful.app.dao.extension.util.JdbcConnectionUtil;
 import com.restful.app.extension_entity.Person;
@@ -16,7 +17,7 @@ import java.util.List;
 public class JdbcPersonDaoImpl implements JdbcPersonDao {
 
     @Override
-    public void createPerson(Person person) {
+    public void createPerson(Person person) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("INSERT INTO Person (name, age, email) VALUES(?, ?, ?)");
             preparedStatement.setString(1, person.getName());
@@ -25,11 +26,13 @@ public class JdbcPersonDaoImpl implements JdbcPersonDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 
     @Override
-    public void updatePerson(long id, Person person) {
+    public void updatePerson(long id, Person person) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("UPDATE Person SET name=?, age=?, email=? WHERE id=?");
             preparedStatement.setString(1, person.getName());
@@ -39,11 +42,13 @@ public class JdbcPersonDaoImpl implements JdbcPersonDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 
     @Override
-    public List<Person> getAllPersons() {
+    public List<Person> getAllPersons() throws SQLException {
         List<Person> people = new ArrayList<>();
         try {
             Statement statement = JdbcConnectionUtil.getConnection().createStatement();
@@ -59,12 +64,14 @@ public class JdbcPersonDaoImpl implements JdbcPersonDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
         return people;
     }
 
     @Override
-    public Person getPersonByEmail(String email) {
+    public Person getPersonByEmail(String email) throws SQLException {
         Person person = null;
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("SELECT * FROM Person WHERE email=?");
@@ -78,18 +85,22 @@ public class JdbcPersonDaoImpl implements JdbcPersonDao {
             person.setEmail(resultSet.getString("email"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
         return person;
     }
 
     @Override
-    public void deletePerson(long id) {
+    public void deletePerson(long id) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("DELETE FROM Person WHERE id=?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 

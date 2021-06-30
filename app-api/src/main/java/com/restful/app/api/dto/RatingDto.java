@@ -21,7 +21,7 @@ public class RatingDto {
     private LocalDateTime dateOfpost;
     private double ratingValue;
     private String review;
-    private UserDto user;
+//    private UserDto user;
 //    private BookDto book;
 
 }

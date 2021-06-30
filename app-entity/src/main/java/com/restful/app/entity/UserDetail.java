@@ -5,14 +5,12 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @SuperBuilder
 @Table(name = "user_detail")
-@EqualsAndHashCode
 public class UserDetail extends AEntity<Long> {
 
     @Column(name = "passport_number")
@@ -30,6 +28,7 @@ public class UserDetail extends AEntity<Long> {
     @Column(name = "ei_address")
     private String educationalInstitutionAddress;
 
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "userDetails",
     fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)

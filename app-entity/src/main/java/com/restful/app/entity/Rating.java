@@ -6,14 +6,12 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "rating")
 @SuperBuilder
-@EqualsAndHashCode
+@Table(name = "rating")
 public class Rating extends AEntity<Long> {
 
     @Column(name = "date")

@@ -16,7 +16,8 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping()
-public class RatingController {
+public class
+RatingController {
 
     private final IRatingService ratingService;
     private final IBookService bookService;

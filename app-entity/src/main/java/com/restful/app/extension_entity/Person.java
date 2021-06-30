@@ -6,14 +6,13 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @SuperBuilder
 @Entity
 @Table(name = "person")
@@ -28,10 +27,11 @@ public class Person extends AEntity<Long> {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
-            mappedBy = "person",
-            fetch = FetchType.LAZY)
-    private List<Parking> parkings = new ArrayList<>();
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH},
+            mappedBy = "person")
+    private Set<Parking> parkings = new HashSet<>();
 
 
 }

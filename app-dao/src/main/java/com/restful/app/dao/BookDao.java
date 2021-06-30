@@ -3,8 +3,11 @@ package com.restful.app.dao;
 import com.restful.app.api.dao.IBookDao;
 import com.restful.app.api.enums.OrderByQuerys;
 import com.restful.app.entity.*;
+import org.hibernate.annotations.QueryHints;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
+import javax.persistence.Subgraph;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -17,6 +20,25 @@ public class BookDao extends AGenericDao<Book> implements IBookDao {
 
     public BookDao() {
         super(Book.class);
+    }
+
+    private EntityGraph<Book> createEntityGraph() {
+        EntityGraph<Book> entityGraph = entityManager.createEntityGraph(Book.class);
+        entityGraph.addAttributeNodes(Book_.ratings);
+        return entityGraph;
+    }
+
+    public List<Book> findAllBooksTypedQuery() {
+        TypedQuery<Book> query = entityManager.createQuery("select distinct b from Book b " +
+                "left join fetch b.ratings", Book.class);
+                query.setHint(QueryHints.PASS_DISTINCT_THROUGH, false);
+        List<Book> books = query.getResultList();
+
+        query = entityManager.createQuery("select distinct b from Book b " +
+                "left join fetch b.authors a", Book.class);
+                query.setHint(QueryHints.PASS_DISTINCT_THROUGH, false);
+                books = query.getResultList();
+        return books;
     }
 
     public Book findBookByIsbn(String isbn) {
@@ -55,8 +77,10 @@ public class BookDao extends AGenericDao<Book> implements IBookDao {
         Join<Book, Rating> ratingJoin = bookRoot.join(Book_.ratings, JoinType.LEFT);
         Order order = builder.desc(bookRoot.get(Book_.dateOfCreation));
         query.multiselect(bookRoot, builder.avg(ratingJoin.get(Rating_.ratingValue)))
-                .groupBy(bookRoot.get(Book_.id)).orderBy(order);
-        return entityManager.createQuery(query).getResultList();
+                .groupBy(bookRoot.get(Book_.id),ratingJoin.get(Rating_.id)).orderBy(order);
+        TypedQuery<Tuple> result = entityManager.createQuery(query);
+        result.setHint("javax.persistence.fetchgraph", createEntityGraph());
+        return result.getResultList();
     }
 
     public List<Tuple> findAllBooksOrderByRequestWithAvgRating(String orderBy, String genre) {

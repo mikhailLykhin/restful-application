@@ -2,6 +2,7 @@ package com.restful.app.dao;
 
 import com.restful.app.api.dao.IAGenericDao;
 import com.restful.app.entity.AEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,12 +16,12 @@ public class AGenericDao<T extends AEntity<Long>> implements IAGenericDao<T> {
 
     private final Class<T> entity;
 
+    @PersistenceContext(unitName = "Criteria")
+    protected EntityManager entityManager;
+
     public AGenericDao(Class<T> clazz) {
         this.entity = clazz;
     }
-
-    @PersistenceContext
-    protected EntityManager entityManager;
 
     public void create(T entity) {
         entityManager.persist(entity);

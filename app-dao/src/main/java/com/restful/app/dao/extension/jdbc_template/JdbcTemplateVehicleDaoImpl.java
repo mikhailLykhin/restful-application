@@ -1,6 +1,7 @@
 package com.restful.app.dao.extension.jdbc_template;
 
 import com.restful.app.api.dao.extension.jdbc_template_dao.JdbcTemplateVehicleDao;
+import com.restful.app.api.row_mappers.VehicleRowMapper;
 import com.restful.app.extension_entity.Vehicle;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class JdbcTemplateVehicleDaoImpl implements JdbcTemplateVehicleDao {
@@ -35,23 +37,43 @@ public class JdbcTemplateVehicleDaoImpl implements JdbcTemplateVehicleDao {
             return preparedStatement;
         }, keyHolder);
 
-        jdbcTemplate.update("INSERT INTO parking_vehicle (parking_id, vehicle_id) VALUES(?,?)",
-                vehicle.getParkings().stream().findFirst().get().getId(), keyHolder.getKeys().get("id"));
+        vehicle.getParkings().forEach(p -> {
+            jdbcTemplate.update("INSERT INTO parking_vehicle (parking_id, vehicle_id) VALUES(?,?)",
+                    p.getId(), keyHolder.getKeys().get("id"));
+        });
+
     }
 
     @Override
     public void updateVehicle(long id, Vehicle vehicle) {
-
+        jdbcTemplate.update("UPDATE vehicle SET type=?, manufacture=?, model=? WHERE id=?",
+                vehicle.getType().name(), vehicle.getManufacture(), vehicle.getModel(), id);
     }
 
     @Override
     public List<Vehicle> getAllVehicles() {
-        return null;
+        return jdbcTemplate.queryForObject("select veh.id as vehId, veh.type as vehType,\n" +
+                "veh.manufacture as vehManufacture, veh.model as vehModel,\n" +
+                "eng.id as engId, eng.number as engNumber, eng.type as engType, \n" +
+                "eng.volume as engVolume,\n" +
+                "p.id as pId, p.square as pSquare, p.address as pAddress\n" +
+                "from vehicle as veh\n" +
+                "inner join engine as eng on veh.engine_id = eng .id \n" +
+                "inner join parking_vehicle pv on veh.id = pv.vehicle_id \n" +
+                "inner join parking p on p.id = pv.parking_id;", new VehicleRowMapper());
     }
 
     @Override
     public Vehicle getVehicle(long id) {
-        return null;
+        return Objects.requireNonNull(jdbcTemplate.queryForObject("select veh.id as vehId, veh.type as vehType,\n" +
+                "veh.manufacture as vehManufacture, veh.model as vehModel,\n" +
+                "eng.id as engId, eng.number as engNumber, eng.type as engType, \n" +
+                "eng.volume as engVolume,\n" +
+                "p.id as pId, p.square as pSquare, p.address as pAddress\n" +
+                "from vehicle as veh\n" +
+                "inner join engine as eng on veh.engine_id = eng .id \n" +
+                "inner join parking_vehicle pv on veh.id = pv.vehicle_id \n" +
+                "inner join parking p on p.id = pv.parking_id where veh.id = ?;", new VehicleRowMapper(), id)).stream().findFirst().get();
     }
 
     @Override

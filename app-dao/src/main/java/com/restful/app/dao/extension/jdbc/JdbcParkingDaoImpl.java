@@ -17,7 +17,7 @@ import java.util.List;
 public class JdbcParkingDaoImpl implements JdbcParkingDao {
 
     @Override
-    public void createParking(Parking parking) {
+    public void createParking(Parking parking) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("INSERT INTO Parking (square, address, person_id) VALUES(?, ?, ?)");
             preparedStatement.setFloat(1, parking.getSquare());
@@ -26,11 +26,13 @@ public class JdbcParkingDaoImpl implements JdbcParkingDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 
     @Override
-    public void updateParking(long id, Parking parking) {
+    public void updateParking(long id, Parking parking) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("UPDATE Parking SET square=?, address=?, person_id=? WHERE id=?");
             preparedStatement.setFloat(1, parking.getSquare());
@@ -40,11 +42,13 @@ public class JdbcParkingDaoImpl implements JdbcParkingDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 
     @Override
-    public List<Parking> getAllParkings() {
+    public List<Parking> getAllParkings() throws SQLException {
         List<Parking> parkings = new ArrayList<>();
         try {
             Statement statement = JdbcConnectionUtil.getConnection().createStatement();
@@ -66,12 +70,14 @@ public class JdbcParkingDaoImpl implements JdbcParkingDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
         return parkings;
     }
 
     @Override
-    public Parking getParking(long id) {
+    public Parking getParking(long id) throws SQLException {
         Parking parking = null;
         Person person = null;
         try {
@@ -95,18 +101,22 @@ public class JdbcParkingDaoImpl implements JdbcParkingDao {
             person.getParkings().add(parking);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
         return parking;
     }
 
     @Override
-    public void deleteParking(long id) {
+    public void deleteParking(long id) throws SQLException {
         try {
             PreparedStatement preparedStatement = JdbcConnectionUtil.getConnection().prepareStatement("DELETE FROM Parking WHERE id=?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            JdbcConnectionUtil.getConnection().close();
         }
     }
 }

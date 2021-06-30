@@ -11,13 +11,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @SuperBuilder
-@EqualsAndHashCode
 @Entity
 @Table(name = "book")
 public class Book extends AEntity<Long> {
@@ -43,6 +40,7 @@ public class Book extends AEntity<Long> {
     @Column(name = "quantity")
     private int quantity;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
@@ -59,14 +57,14 @@ public class Book extends AEntity<Long> {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
             orphanRemoval = true,
-            mappedBy = "book",
-            fetch = FetchType.LAZY)
-    private List<Rating> ratings = new ArrayList<>();
+            mappedBy = "book")
+    private Set<Rating> ratings = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "book",
-    fetch = FetchType.LAZY)
-    private List<Request> requests = new ArrayList<>();
+            mappedBy = "book")
+    private Set<Request> requests = new HashSet<>();
 }

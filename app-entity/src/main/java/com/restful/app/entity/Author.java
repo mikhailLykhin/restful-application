@@ -7,19 +7,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @SuperBuilder
-@EqualsAndHashCode
 @Entity
 @Table(name = "author")
 public class Author extends AEntity<Long>{
 
     private String name;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),

@@ -30,14 +30,14 @@ public class JdbcTemplateVehicleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/vehicles/{id}")
-    public VehicleDto getEngine(@PathVariable("id") long id) {
-        return vehicleService.getVehicle(id);
-    }
-
     @GetMapping("/vehicles")
     public List<VehicleDto> getAllEngines() {
         return vehicleService.getAllVehicle();
+    }
+
+    @GetMapping("/vehicles/{id}")
+    public VehicleDto getEngine(@PathVariable("id") long id) {
+        return vehicleService.getVehicle(id);
     }
 
     @DeleteMapping("/vehicles/{id}")

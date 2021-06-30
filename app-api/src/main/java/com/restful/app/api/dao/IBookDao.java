@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface IBookDao extends IAGenericDao<Book> {
 
+    List<Book> findAllBooksTypedQuery();
+
     Book findBookByIsbn(String isbn);
 
     Tuple findBookByIsbnWithAvgRating(String isbn);

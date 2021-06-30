@@ -1,6 +1,7 @@
 package com.restful.app.api.services;
 
 import com.restful.app.api.dto.BookDto;
+import com.restful.app.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Service
 public interface IBookService {
+
+    List<BookDto> findAllBooksTypedQuery();
 
     BookDto getBookById(long id);
 

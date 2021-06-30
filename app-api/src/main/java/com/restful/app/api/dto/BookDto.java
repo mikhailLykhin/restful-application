@@ -41,7 +41,7 @@ public class BookDto {
     private PublisherDto publisher;
     @NotNull
     private GenreDto genre;
-    private List<RatingDto> ratings;
+    private Set<RatingDto> ratings;
     private Double averageRating;
 
 }

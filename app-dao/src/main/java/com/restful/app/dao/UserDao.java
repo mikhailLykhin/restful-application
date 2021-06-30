@@ -7,6 +7,7 @@ import com.restful.app.entity.UserDetail_;
 import com.restful.app.entity.User_;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -17,6 +18,15 @@ import java.util.List;
 public class UserDao extends AGenericDao<User> implements IUserDao {
     public UserDao() {
         super(User.class);
+    }
+
+    private EntityGraph<User> createEntityGraph() {
+        EntityGraph<User> entityGraph = entityManager.createEntityGraph(User.class);
+        entityGraph.addAttributeNodes(User_.roles);
+        entityGraph.addAttributeNodes(User_.userDetails);
+        entityGraph.addAttributeNodes(User_.ratings);
+        entityGraph.addAttributeNodes(User_.requests);
+        return entityGraph;
     }
 
     public boolean isUserExist(String email) {
@@ -44,6 +54,7 @@ public class UserDao extends AGenericDao<User> implements IUserDao {
             Root<User> userRoot = query.from(User.class);
             query.select(userRoot).where(builder.equal(userRoot.get(User_.email), email));
             TypedQuery<User> result = entityManager.createQuery(query);
+            result.setHint("javax.persistence.fetchgraph", createEntityGraph());
             return result.getResultList().stream().findFirst().orElse(null);
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage());

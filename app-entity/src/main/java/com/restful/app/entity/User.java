@@ -12,11 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @SuperBuilder
 @Entity
 @Table(name = "user")
@@ -44,24 +42,24 @@ public class User extends AEntity<Long> {
     @Column(name = "date_creation")
     private LocalDateTime dateOfCreation;
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
-            mappedBy = "user",
-            fetch = FetchType.LAZY)
-    private List<Request> requests = new ArrayList<>();
+            mappedBy = "user")
+    private Set<Request> requests = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user",
-            fetch = FetchType.LAZY)
-    private List<Rating> ratings = new ArrayList<>();
+            mappedBy = "user")
+    private Set<Rating> ratings = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER,
+    @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL)
     @JoinColumn(name = "user_detail_id", referencedColumnName = "id")
     private UserDetail userDetails;

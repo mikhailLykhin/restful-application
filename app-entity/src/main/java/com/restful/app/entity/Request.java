@@ -6,14 +6,12 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@SuperBuilder
 @Entity
+@SuperBuilder
 @Table(name = "request")
 public class Request extends AEntity<Long> {
 
@@ -27,7 +25,7 @@ public class Request extends AEntity<Long> {
     private LocalDateTime dateOfReturn;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
-    fetch = FetchType.EAGER)
+    fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

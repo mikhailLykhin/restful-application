@@ -1,6 +1,6 @@
 package com.restful.app.rest.config;
 
-import com.restful.app.rest.config.extension_configuration.JdbcTemplateConfiguration;
+import com.restful.app.rest.config.extension_configuration.ExtensionConfiguration;
 import com.restful.app.rest.config.security.SecurityConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -13,7 +13,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{JdbcTemplateConfiguration.class, PersistenceConfiguration.class};
+        return new Class[]{ExtensionConfiguration.class, PersistenceConfiguration.class};
     }
 
     @Override

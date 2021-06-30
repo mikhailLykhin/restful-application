@@ -14,21 +14,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping()
 public class BookController {
 
     private final IBookService bookService;
-    private final IRatingService ratingService;
-    private final IGenreService genreService;
-    private final IRequestService requestService;
 
-    public BookController(IBookService bookService, IRatingService ratingService, IGenreService genreService, IRequestService requestService) {
+    public BookController(IBookService bookService) {
         this.bookService = bookService;
-        this.ratingService = ratingService;
-        this.genreService = genreService;
-        this.requestService = requestService;
+    }
+
+    @GetMapping("books/typed")
+    public List<BookDto> findBooksTyped() {
+        return this.bookService.findAllBooksTypedQuery();
     }
 
     @GetMapping("/books/book/{isbn}")
@@ -47,8 +47,7 @@ public class BookController {
                                                   @RequestParam(value = "search", required = false) String search,
                                                   @RequestParam(value = "orderBy", required = false) String orderBy,
                                                      @RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                                                     @RequestParam(value = "size", defaultValue = "5") int pageSize,
-                                                  Model model) {
+                                                     @RequestParam(value = "size", defaultValue = "5") int pageSize) {
         if (!search.isEmpty()) {
             return this.bookService.getAllBooksBySearchAndOrderByRequestWithAvgRating(genre, search, orderBy, pageNumber, pageSize);
         }

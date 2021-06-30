@@ -29,7 +29,7 @@ public class RatingService implements IRatingService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void addRating(Principal principal, String isbn, RatingDto ratingDto) {
         User user = this.userDao.findUserByEmail(principal.getName());
         Book book = this.bookDao.findBookByIsbn(isbn);
@@ -45,7 +45,7 @@ public class RatingService implements IRatingService {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public boolean isRatingExistFromCurrentUser(String isbn, String email) {
         return this.ratingDao.isRatingExistFromCurrentUser(isbn, email);
     }

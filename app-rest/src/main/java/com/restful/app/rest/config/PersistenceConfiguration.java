@@ -17,13 +17,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * @author Neil Alishev
- */
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
-@EnableJpaRepositories(basePackages = "com.restful.app")
-@ComponentScan({ "com.restful.app" })
+@EnableJpaRepositories(value = "com.restful.app.dao", transactionManagerRef = "transactionManager")
+@ComponentScan(basePackages = { "com.restful.app.*" })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class PersistenceConfiguration {
 
@@ -31,7 +28,7 @@ public class PersistenceConfiguration {
         super();
     }
 
-    @Bean
+    @Bean(name = "Criteria")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(restDataSource());
@@ -66,14 +63,18 @@ public class PersistenceConfiguration {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "none");
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         hibernateProperties.setProperty("hibernate.globally_quoted_identifiers", "true");
-        hibernateProperties.setProperty("show_sql", "true");
+        hibernateProperties.setProperty("hibernate.show_sql", "true");
+        hibernateProperties.setProperty("hibernate.use_sql_comments", "true");
+        hibernateProperties.setProperty("hibernate.format_sql", "true");
         return hibernateProperties;
     }
+
 
     @Bean
     public SpringLiquibase liquibase() {
