@@ -114,11 +114,6 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<Integer> getTotalPages(Page<BookDto> page) {
-        return PaginationUtil.getListOfPageNumbers(page);
-    }
-
-    @Override
     @Transactional("transactionManager")
     public void addBook(BookDto bookDto) {
         final int DEFAULT_QUANTITY = 1;
