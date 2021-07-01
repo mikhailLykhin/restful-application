@@ -1,7 +1,6 @@
 package com.restful.app.api.dao.extension.jdbc_template_dao;
 
 import com.restful.app.extension_entity.Parking;
-import com.restful.app.extension_entity.Person;
 
 import java.util.List;
 

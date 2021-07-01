@@ -1,7 +1,6 @@
 package com.restful.app.api.services;
 
 import com.restful.app.api.dto.RequestDto;
-import com.restful.app.entity.Request;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

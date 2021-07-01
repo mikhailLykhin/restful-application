@@ -1,6 +1,5 @@
 package com.restful.app.rest.controllers.extension.sd_controllers;
 
-import com.restful.app.api.dto.extension.EngineDto;
 import com.restful.app.api.dto.extension.VehicleDto;
 import com.restful.app.api.services.extension.sd.SdVehicleService;
 import org.springframework.http.HttpStatus;

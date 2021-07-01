@@ -4,9 +4,7 @@ package com.restful.app.rest.config.security.handlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restful.app.api.dto.ErrorDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 

@@ -19,5 +19,5 @@ public interface SdPersonService {
 
     PersonDto getPersonByEmail(String email);
 
-    void deletePerson(long id);
+    void deletePerson(String email);
 }

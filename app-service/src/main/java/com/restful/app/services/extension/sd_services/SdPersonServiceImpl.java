@@ -41,7 +41,7 @@ public class SdPersonServiceImpl implements SdPersonService {
         Optional<Person> entity = personDao.findById(id);
         Person person = entity.orElse(null);
         if (person == null) {
-            throw new IncorrectDataException("Engine doesn't exist");
+            throw new IncorrectDataException("Person doesn't exist");
         }
         person = commonMapper.map(personDto, Person.class);
         personDao.save(person);
@@ -70,19 +70,18 @@ public class SdPersonServiceImpl implements SdPersonService {
     public PersonDto getPersonByEmail(String email) {
         Person entity = personDao.findByEmail(email);
         if (entity == null) {
-            throw new IncorrectDataException("Engine doesn't exist");
+            throw new IncorrectDataException("Person doesn't exist");
         }
         return commonMapper.map(entity, PersonDto.class);
     }
 
     @Override
     @Transactional("extensionTransactionManager")
-    public void deletePerson(long id) {
-        Optional<Person> entity = personDao.findById(id);
-        Person person = entity.orElse(null);
-        if (person == null) {
-            throw new IncorrectDataException("Engine doesn't exist");
+    public void deletePerson(String email) {
+        Person entity = personDao.findByEmail(email);
+        if (entity == null) {
+            throw new IncorrectDataException("Person doesn't exist");
         }
-        personDao.delete(person);
+        personDao.delete(entity);
     }
 }

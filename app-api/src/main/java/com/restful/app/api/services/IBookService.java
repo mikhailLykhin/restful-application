@@ -1,7 +1,6 @@
 package com.restful.app.api.services;
 
 import com.restful.app.api.dto.BookDto;
-import com.restful.app.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +24,6 @@ public interface IBookService {
     Page<BookDto> getAllBooksWithAvgRating(int pageNumber, int pageSize);
 
     void addBook(BookDto bookDto);
-
-    List<Integer> getTotalPages(Page<BookDto> page);
 
     Page<BookDto> getAllBooksBySearchAndOrderByRequestWithAvgRating(String search, String genre, String orderBy, int pageNumber, int pageSize);
 

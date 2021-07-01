@@ -2,13 +2,10 @@ package com.restful.app.services.extension.jdbc_template;
 
 import com.restful.app.api.dao.extension.jdbc_template_dao.JdbcTemplateEngineDao;
 import com.restful.app.api.dto.extension.EngineDto;
-import com.restful.app.api.dto.extension.PersonDto;
 import com.restful.app.api.services.CommonMapper;
 import com.restful.app.api.services.extension.jdbc_template.JdbcTemplateEngineService;
 import com.restful.app.extension_entity.Engine;
-import com.restful.app.extension_entity.Person;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

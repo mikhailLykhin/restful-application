@@ -18,8 +18,6 @@ public interface IAGenericDao<T extends AEntity<Long>> {
 
     void update(T entity);
 
-    void detach(T entity);
-
     void delete(T entity);
 
 }

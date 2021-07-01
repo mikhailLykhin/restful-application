@@ -1,0 +1,13 @@
+[{"id":1,
+  "name":"Mike",
+  "age":22,
+  "email":"Mike@somemail.ru",
+  "parkings":[
+    {"id":1,
+      "square":100.5,
+      "address":"New Zealand 7",
+      "personId":1,
+      "vehiclesIds":[1]
+    }
+  ]
+}]

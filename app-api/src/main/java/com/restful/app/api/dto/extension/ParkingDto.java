@@ -1,6 +1,5 @@
 package com.restful.app.api.dto.extension;
 
-import com.restful.app.extension_entity.Person;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

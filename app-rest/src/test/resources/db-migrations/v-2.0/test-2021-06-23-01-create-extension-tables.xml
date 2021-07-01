@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet context="legacy" author="author" id="3-1">
+        <createTable tableName="person">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="parking">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="square" type="float">
+                <constraints nullable="true"/>
+            </column>
+            <column name="address" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="person_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="person_id_FK" references="person(id)"
+                             deleteCascade="true"/>
+            </column>
+
+        </createTable>
+        <createTable tableName="engine">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="number" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="volume" type="float">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="vehicle">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="manufacture" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="model" type="VARCHAR(45 BYTE)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="engine_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="engine_id_FK" references="engine(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="parking_vehicle">
+            <column name="parking_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             foreignKeyName="parking_fk" references="parking(id)" deleteCascade="true"/>
+            </column>
+            <column name="vehicle_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             foreignKeyName="vehicle_FK" references="vehicle(id)" deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <insert tableName="person">
+            <column  name="name"  value="Mike"/>
+            <column  name="age"  value="22"/>
+            <column  name="email"  value="Mike@somemail.ru"/>
+        </insert>
+
+        <insert tableName="engine">
+            <column  name="number"  value="sr20vet"/>
+            <column  name="type"  value="FUEL"/>
+            <column  name="volume"  value="2.0"/>
+        </insert>
+
+        <insert tableName="parking">
+            <column  name="square"  value="100.5"/>
+            <column  name="address"  value="New Zealand 7"/>
+            <column  name="person_id"  value="1"/>
+        </insert>
+
+        <insert tableName="vehicle">
+            <column  name="type"  value="AUTO"/>
+            <column  name="manufacture"  value="Nissan"/>
+            <column  name="model"  value="primera"/>
+            <column  name="engine_id"  value="1"/>
+        </insert>
+
+        <insert tableName="parking_vehicle">
+            <column  name="parking_id"  value="1"/>
+            <column  name="vehicle_id"  value="1"/>
+        </insert>
+
+
+    </changeSet>
+</databaseChangeLog>

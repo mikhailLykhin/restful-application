@@ -1,7 +1,6 @@
 package com.restful.app.rest.controllers.extension.sd_controllers;
 
 import com.restful.app.api.dao.extension.sd.projections.PersonView;
-import com.restful.app.api.dto.extension.EngineDto;
 import com.restful.app.api.dto.extension.PersonDto;
 import com.restful.app.api.services.extension.sd.SdPersonService;
 import org.springframework.http.HttpStatus;
@@ -53,9 +52,9 @@ public class SdPersonController {
         return personService.getAllPersonsWithPagination(page, size);
     }
 
-    @DeleteMapping("/persons/{id}")
-    public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") int id) {
-        personService.deletePerson(id);
+    @DeleteMapping("/persons/{email}")
+    public ResponseEntity<HttpStatus> deletePerson(@PathVariable("email") String email) {
+        personService.deletePerson(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

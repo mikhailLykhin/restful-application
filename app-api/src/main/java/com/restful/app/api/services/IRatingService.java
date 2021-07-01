@@ -4,7 +4,6 @@ import com.restful.app.api.dto.RatingDto;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 
 @Service
 public interface IRatingService {

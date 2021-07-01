@@ -1,6 +1,5 @@
 package com.restful.app.api.mappers;
 
-import com.restful.app.api.dao.IUserDao;
 import com.restful.app.api.dto.UserDto;
 import com.restful.app.entity.User;
 import org.modelmapper.ModelMapper;

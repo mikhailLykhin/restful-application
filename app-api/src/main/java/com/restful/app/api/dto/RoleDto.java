@@ -1,6 +1,5 @@
 package com.restful.app.api.dto;
 
-import com.restful.app.api.enums.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

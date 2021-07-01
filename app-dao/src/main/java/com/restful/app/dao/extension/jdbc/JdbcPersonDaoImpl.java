@@ -1,6 +1,5 @@
 package com.restful.app.dao.extension.jdbc;
 
-import com.restful.app.api.dao.extension.jdbc_dao.JdbcParkingDao;
 import com.restful.app.api.dao.extension.jdbc_dao.JdbcPersonDao;
 import com.restful.app.dao.extension.util.JdbcConnectionUtil;
 import com.restful.app.extension_entity.Person;

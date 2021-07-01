@@ -3,7 +3,6 @@ package com.restful.app.rest.controllers;
 import com.restful.app.api.dto.BookDto;
 import com.restful.app.api.exceptions.IncorrectDataException;
 import com.restful.app.api.services.IBookService;
-import com.restful.app.api.services.IGenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

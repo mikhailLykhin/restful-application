@@ -1,6 +1,5 @@
 package com.restful.app.utils;
 
-import com.restful.app.api.dto.UserDtoMyAccount;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ResourceUtils;

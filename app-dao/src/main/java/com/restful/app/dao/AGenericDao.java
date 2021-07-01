@@ -2,7 +2,6 @@ package com.restful.app.dao;
 
 import com.restful.app.api.dao.IAGenericDao;
 import com.restful.app.entity.AEntity;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

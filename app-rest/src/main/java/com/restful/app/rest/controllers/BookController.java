@@ -1,19 +1,10 @@
 package com.restful.app.rest.controllers;
 
 import com.restful.app.api.dto.BookDto;
-import com.restful.app.api.dto.RatingDto;
 import com.restful.app.api.services.IBookService;
-import com.restful.app.api.services.IGenreService;
-import com.restful.app.api.services.IRatingService;
-import com.restful.app.api.services.IRequestService;
-import com.restful.app.entity.Book;
-import com.restful.app.utils.LogoFileUploader;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController

@@ -2,12 +2,15 @@ package com.restful.app.extension_entity;
 
 import com.restful.app.entity.AEntity;
 import com.restful.app.extension_enum.EngineType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
