@@ -3,27 +3,36 @@ services:
   pgdb:
     image: postgres
     environment:
-#      POSTGRES_DB: global_library
-      POSTGRES_MULTIPLE_DATABASES: global_library, extension_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - 5433:5433
-    volumes:
-          - pg_data:/var/lib/postgresql
-  web:
-    build:
-      context: app-rest
-    depends_on:
-      - pgdb
-    image: tomcat:9.0
-    volumes:
-      - ./target/app-rest.war:/usr/local/tomcat/webapps/app-rest.war
-    ports:
-      - '8080:8080'
-    environment:
       POSTGRES_DB: global_library
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql
+  pg-ext:
+    image: postgres
+    environment:
+      POSTGRES_DB: extension_db
+      POSTGRES_USER: postgres_ext
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5433:5432
+    volumes:
+      - pg_ext:/var/lib/postgresql
+  web:
+    build:
+      context: ""
+    depends_on:
+      - pgdb
+      - pg-ext
+    image: tomcat:9.0
+    volumes:
+      - ./app-rest/target/app-rest.war:/usr/local/tomcat/webapps/app-rest.war
+    ports:
+      - '8082:8080'
 volumes:
+  pg_ext:
   pg_data:
