@@ -2,6 +2,8 @@ package com.restful.app.rest.config.extension_configuration;
 
 import com.restful.app.rest.config.WebConfiguration;
 import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -48,8 +50,8 @@ public class ExtensionConfiguration extends WebConfiguration {
     public DataSource extensionDataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://pg-ext:5432/extension_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Minsk&useSSL=false");
-        dataSource.setUsername("postgres_ext");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/extension_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Minsk&useSSL=false");
+        dataSource.setUsername("postgres");
         dataSource.setPassword("password");
         return dataSource;
     }

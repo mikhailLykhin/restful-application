@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -21,7 +22,7 @@ public class VehicleDto {
     private String manufacture;
     private String model;
     private long engineId;
-    private Set<Long> parkingIds;
+    private Set<Long> parkingIds = new HashSet<>();
 
 
 }

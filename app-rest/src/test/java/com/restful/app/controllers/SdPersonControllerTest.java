@@ -6,6 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestConfiguration.class })
+@ContextConfiguration(classes = {TestConfiguration.class})
 @WebAppConfiguration
 public class SdPersonControllerTest {
 
@@ -108,3 +113,4 @@ public class SdPersonControllerTest {
         return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
     }
 }
+

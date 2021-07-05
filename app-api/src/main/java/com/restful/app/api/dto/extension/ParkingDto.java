@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -19,7 +20,7 @@ public class ParkingDto {
     private float square;
     private String address;
     private long personId;
-    private Set<Long> vehiclesIds;
+    private Set<Long> vehiclesIds = new HashSet<>();
 
 
 }

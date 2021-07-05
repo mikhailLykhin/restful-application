@@ -22,31 +22,31 @@ public class JdbcTemplateEngineServiceImpl implements JdbcTemplateEngineService 
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void createEngine(EngineDto personDto) {
         engineDao.createEngine(commonMapper.map(personDto, Engine.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void updateEngine(long id, EngineDto personDto) {
         engineDao.updateEngine(id, commonMapper.map(personDto, Engine.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public List<EngineDto> getAllEngines() {
         return commonMapper.mapAll(engineDao.getAllEngines(), EngineDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public EngineDto getEngine(long id) {
         return commonMapper.map(engineDao.getEngine(id), EngineDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void deleteEngine(long id) {
         engineDao.deleteEngine(id);
     }

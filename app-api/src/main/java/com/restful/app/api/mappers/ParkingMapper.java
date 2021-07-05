@@ -48,8 +48,10 @@ public class ParkingMapper extends AbstractMapper<Parking, ParkingDto> {
     void mapSpecificFields(ParkingDto source, Parking destination) {
         destination.setPerson(personDao.findById(source.getPersonId()).orElse(null));
         Set<Vehicle> vehicles = new HashSet<>();
-        for (Long vehiclId : source.getVehiclesIds()) {
-            vehicles.add(vehicleDao.getById(vehiclId));
+        if(!source.getVehiclesIds().isEmpty()) {
+            for (Long vehiclId : source.getVehiclesIds()) {
+                vehicles.add(vehicleDao.getById(vehiclId));
+            }
         }
         destination.setVehicles(vehicles);
     }

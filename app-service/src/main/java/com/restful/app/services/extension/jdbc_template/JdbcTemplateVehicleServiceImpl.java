@@ -22,32 +22,32 @@ public class JdbcTemplateVehicleServiceImpl implements JdbcTemplateVehicleServic
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void createVehicle(VehicleDto vehicleDto) {
         vehicleDao.createVehicle(commonMapper.map(vehicleDto, Vehicle.class));
 
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void updateVehicle(long id, VehicleDto vehicleDto) {
         vehicleDao.updateVehicle(id, commonMapper.map(vehicleDto, Vehicle.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public List<VehicleDto> getAllVehicle() {
         return commonMapper.mapAll(vehicleDao.getAllVehicles(), VehicleDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public VehicleDto getVehicle(long id) {
         return commonMapper.map(vehicleDao.getVehicle(id), VehicleDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void deleteVehicle(long id) {
         vehicleDao.deleteVehicle(id);
 

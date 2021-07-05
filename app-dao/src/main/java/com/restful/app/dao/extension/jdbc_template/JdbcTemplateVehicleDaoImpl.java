@@ -1,7 +1,7 @@
 package com.restful.app.dao.extension.jdbc_template;
 
 import com.restful.app.api.dao.extension.jdbc_template_dao.JdbcTemplateVehicleDao;
-import com.restful.app.api.row_mappers.VehicleRowMapper;
+import com.restful.app.api.row_mappers.VehicleExtractData;
 import com.restful.app.extension_entity.Vehicle;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -52,7 +52,7 @@ public class JdbcTemplateVehicleDaoImpl implements JdbcTemplateVehicleDao {
 
     @Override
     public List<Vehicle> getAllVehicles() {
-        return jdbcTemplate.queryForObject("select veh.id as vehId, veh.type as vehType,\n" +
+        return jdbcTemplate.query("select veh.id as vehId, veh.type as vehType,\n" +
                 "veh.manufacture as vehManufacture, veh.model as vehModel,\n" +
                 "eng.id as engId, eng.number as engNumber, eng.type as engType, \n" +
                 "eng.volume as engVolume,\n" +
@@ -60,12 +60,12 @@ public class JdbcTemplateVehicleDaoImpl implements JdbcTemplateVehicleDao {
                 "from vehicle as veh\n" +
                 "inner join engine as eng on veh.engine_id = eng .id \n" +
                 "inner join parking_vehicle pv on veh.id = pv.vehicle_id \n" +
-                "inner join parking p on p.id = pv.parking_id;", new VehicleRowMapper());
+                "inner join parking p on p.id = pv.parking_id;", new VehicleExtractData());
     }
 
     @Override
     public Vehicle getVehicle(long id) {
-        return Objects.requireNonNull(jdbcTemplate.queryForObject("select veh.id as vehId, veh.type as vehType,\n" +
+        return Objects.requireNonNull(jdbcTemplate.query("select veh.id as vehId, veh.type as vehType,\n" +
                 "veh.manufacture as vehManufacture, veh.model as vehModel,\n" +
                 "eng.id as engId, eng.number as engNumber, eng.type as engType, \n" +
                 "eng.volume as engVolume,\n" +
@@ -73,7 +73,7 @@ public class JdbcTemplateVehicleDaoImpl implements JdbcTemplateVehicleDao {
                 "from vehicle as veh\n" +
                 "inner join engine as eng on veh.engine_id = eng .id \n" +
                 "inner join parking_vehicle pv on veh.id = pv.vehicle_id \n" +
-                "inner join parking p on p.id = pv.parking_id where veh.id = ?;", new VehicleRowMapper(), id)).stream().findFirst().get();
+                "inner join parking p on p.id = pv.parking_id where veh.id = ?;", new VehicleExtractData(), id)).stream().findFirst().get();
     }
 
     @Override

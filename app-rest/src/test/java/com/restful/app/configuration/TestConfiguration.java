@@ -1,6 +1,7 @@
 package com.restful.app.configuration;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = { "com.restful.app.*" })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableWebMvc
+@EnableAutoConfiguration
 public class TestConfiguration {
 
     @Bean(name = "entityManagerFactory")
@@ -52,7 +54,7 @@ public class TestConfiguration {
     public DataSource testDataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://pgdb:5432/test_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Minsk&useSSL=false");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/test_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Minsk&useSSL=false");
         dataSource.setUsername("postgres");
         dataSource.setPassword("password");
         return dataSource;

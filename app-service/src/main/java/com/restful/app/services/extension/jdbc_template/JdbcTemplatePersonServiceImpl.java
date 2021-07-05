@@ -22,31 +22,31 @@ public class JdbcTemplatePersonServiceImpl implements JdbcTemplatePersonService 
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void createPerson(PersonDto personDto) {
         jdbcTemplatePersonDao.createPerson(commonMapper.map(personDto, Person.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void updatePerson(long id, PersonDto personDto) {
         jdbcTemplatePersonDao.updatePerson(id, commonMapper.map(personDto, Person.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public List<PersonDto> getAllPersons() {
         return commonMapper.mapAll(jdbcTemplatePersonDao.getAllPersons(), PersonDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public PersonDto getPersonByEmail(String email) {
         return commonMapper.map(jdbcTemplatePersonDao.getPersonByEmail(email), PersonDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void deletePerson(long id) {
         jdbcTemplatePersonDao.deletePerson(id);
     }

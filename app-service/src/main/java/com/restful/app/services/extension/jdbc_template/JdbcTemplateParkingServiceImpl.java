@@ -23,31 +23,31 @@ public class JdbcTemplateParkingServiceImpl implements JdbcTemplateParkingServic
 
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void createParking(ParkingDto parkingDto) {
         jdbcTemplateParkingDao.createParking(commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void updateParking(long id, ParkingDto parkingDto) {
         jdbcTemplateParkingDao.updateParking(id, commonMapper.map(parkingDto, Parking.class));
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public List<ParkingDto> getAllParking() {
         return commonMapper.mapAll(jdbcTemplateParkingDao.getAllParkings(), ParkingDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public ParkingDto getParking(long id) {
         return commonMapper.map(jdbcTemplateParkingDao.getParking(id), ParkingDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional("extensionTransactionManager")
     public void deleteParking(long id) {
         jdbcTemplateParkingDao.deleteParking(id);
     }

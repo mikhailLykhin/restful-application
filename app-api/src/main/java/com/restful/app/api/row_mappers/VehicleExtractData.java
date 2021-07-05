@@ -5,18 +5,22 @@ import com.restful.app.extension_entity.Parking;
 import com.restful.app.extension_entity.Vehicle;
 import com.restful.app.extension_enum.EngineType;
 import com.restful.app.extension_enum.VehicleType;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class VehicleRowMapper implements RowMapper<List<Vehicle>> {
+public class VehicleExtractData implements ResultSetExtractor<List<Vehicle>> {
+
     @Override
-    public List<Vehicle> mapRow(ResultSet resultSet, int i) throws SQLException {
+    public List<Vehicle> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
         Map<Long, Vehicle> vehicles = new HashMap<>();
         Map<Long, Engine> engines = new HashMap<>();
-        do {
+        Map<Long, Parking> parkings = new HashMap<>();
+        while (resultSet.next()) {
             Long vehId = resultSet.getLong("vehId");
             String vehType = resultSet.getString("vehType");
             String vehManufacture = resultSet.getString("vehManufacture");
@@ -28,19 +32,23 @@ public class VehicleRowMapper implements RowMapper<List<Vehicle>> {
             Long pId = resultSet.getLong("pId");
             float pSquare = resultSet.getFloat("pSquare");
             String pAddress = resultSet.getString("pAddress");
-            Vehicle vehicle = vehicles.get(vehId);
             Engine engine = engines.get(engId);
-            if (vehicle == null && engine == null) {
+            Parking parking = parkings.get(pId);
+            Vehicle vehicle = vehicles.get(vehId);
+            if (engine == null) {
                 engine = Engine.builder().id(engId).number(engNumber).type(EngineType.valueOf(engType)).volume(engVolume).build();
+                engines.put(engine.getId(), engine);
+            }
+            if(parking == null) {
+                parking = Parking.builder().id(pId).square(pSquare).address(pAddress).build();
+                parkings.put(parking.getId(), parking);
+            }
+            if (vehicle == null) {
                 vehicle = Vehicle.builder().id(vehId).type(VehicleType.valueOf(vehType)).manufacture(vehManufacture).model(vehModel).engine(engine).parkings(new HashSet<>()).build();
                 vehicles.put(vehicle.getId(), vehicle);
-
             }
-            Parking parking = Parking.builder().id(pId).square(pSquare).address(pAddress).build();
-            assert vehicle != null;
             vehicle.getParkings().add(parking);
-
-        } while (resultSet.next());
+        }
         Collection<Vehicle> vehicleList = vehicles.values();
         return new ArrayList<>(vehicleList);
     }
